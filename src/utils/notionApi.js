@@ -4,13 +4,23 @@ const notion = new Client({
   auth: process.env.NOTION_API_KEY,
 });
 
-const getDB = async () => {
+const getDBcontent = async () => {
   const response = await notion.databases.retrieve({
     database_id: process.env.NOTION_DATABASE_ID,
   });
-  console.log(JSON.stringify(response));
+  const content = Object.values(response.properties).reduce((obj, property) => {
+    const { id, ...rest } = property;
+    return { ...obj, [id]: rest };
+  }, {});
+
+  let dbContent = {
+    lastUpdated: await response.last_edited_time,
+    content: content,
+  };
+
+  return dbContent;
 };
 
 module.exports = {
-  getDB,
+  getDBcontent,
 };

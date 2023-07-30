@@ -1,8 +1,8 @@
-import { getDB } from '@/utils/notion/notionApi';
+import { getDBcontent } from '@/utils/notionApi';
 
 export default async function Home() {
-  const db = await getDB();
-
+  const dbContent = await getDBcontent();
+  console.log(await dbContent);
   return (
     <div>
       <h1>Title</h1>
