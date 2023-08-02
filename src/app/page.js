@@ -1,11 +1,15 @@
-import { getDBcontent } from '@/utils/notionApi';
+import { getPosts } from '@/utils/notionApi';
+import BlogCard from './components/BlogCard';
 
 export default async function Home() {
-  const dbContent = await getDBcontent();
-  console.log(await dbContent);
+  const posts = await getPosts();
+
   return (
     <div>
-      <h1>Title</h1>
+      <h1>Blog Posts</h1>
+      {posts.map((post, i) => (
+        <BlogCard post={post} key={`blogcard${i}`} />
+      ))}
     </div>
   );
 }
